@@ -29,12 +29,12 @@ public class ClassroomService {
     }
     @GetMapping
     @RequestMapping("/getByNbrStudents")
-    public List<Classroom> getByNbrStudents(@RequestBody Classroom classroom){
-        return classroomRepository.findByNbrStudents(classroom.getNbrStudents());
+    public List<Classroom> getByNbrStudents(@RequestBody Integer nbr){
+        return classroomRepository.findByNbrStudents(nbr);
     }
 
     @GetMapping
-    @RequestMapping("/byClassroomByName")
+    @RequestMapping("/getClassroomByName")
     public List<Classroom> getByStudents(@RequestBody String name){
         return classroomRepository.findByStudents(name);
     }
@@ -43,5 +43,12 @@ public class ClassroomService {
     public ResponseEntity delete(@PathVariable Long id){
         classroomRepository.deleteById(id);
         return ResponseEntity.accepted().build();
+    }
+    @GetMapping
+    @RequestMapping("/mathNoteBetween")
+    public List<Classroom> getByMathNoteBetween(@RequestBody List<Double> minAndMax){
+        double min = Double.parseDouble(minAndMax.get(0).toString());
+        double max = Double.parseDouble(minAndMax.get(1).toString());
+        return classroomRepository.findByMathMeanNoteBetween(min, max);
     }
 }

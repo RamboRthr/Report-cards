@@ -58,6 +58,11 @@ public class StudentService {
     public List<Student> getStudentByClassroomId(@RequestBody Long id){
         return studentRepository.findByClassroomId(id);
     }
+    @RequestMapping("/minFrequency")
+    @GetMapping
+    public List<Student> getStudentByMinFrequency(@RequestBody double min){
+        return studentRepository.findByFrequencyGreaterThanEqual(min);
+    }
     private void setStudentIntoClassroom(Student student){
         Optional<Classroom> c = classroomRepository.findById(student.getClassroomId());
         Classroom classroom;

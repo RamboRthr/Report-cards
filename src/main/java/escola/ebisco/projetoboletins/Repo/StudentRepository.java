@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByName(String name);
     List<Student> findByClassroomId(Long classroomId);
+
+    List<Student> findByFrequencyGreaterThanEqual(double frequency);
 }
