@@ -7,11 +7,11 @@ import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import escola.ebisco.projetoboletins.Repo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -21,7 +21,7 @@ public class StudentService {
     private StudentRepository studentRepository;
     @Autowired
     private ClassroomRepository classroomRepository;
-    @GetMapping
+    @GetMapping("/getAll")
     public List<Student> getAll(){
         return studentRepository.findAll();
     }
@@ -30,52 +30,49 @@ public class StudentService {
     public ResponseEntity insertStudent(@RequestBody Student student){
         studentRepository.save(student);
         setStudentIntoClassroom(student);
-
         return ResponseEntity.accepted().build();
     }
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity deleteStudent(@PathVariable Long id){
-        String name = null;
-        for (Student student: this.getAll()) {
-            if (Objects.equals(student.getId(), id)){
-                name = student.getName();
-            }
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public ResponseEntity deleteStudent(@RequestParam("id") Long id){
+        if (studentRepository.findById(id).isPresent()) {
+            String name = studentRepository.findById(id).get().getName();
+            studentRepository.deleteById(id);
+            return new ResponseEntity<String>("Student" + name + " deleted", HttpStatus.OK);
         }
-        studentRepository.deleteById(id);
-        return new ResponseEntity<String>("Student" + name + " deleted", HttpStatus.OK);
+        else{
+            return ResponseEntity.notFound().build();
+        }
     }
-    @GetMapping(value = "/{id}")
-    public Optional<Student> getStudentById(@PathVariable Long id){
+    @GetMapping
+    @RequestMapping(value = "/byId")
+    public Optional<Student> getStudentById(@RequestParam("id") Long id){
         return studentRepository.findById(id);
     }
-    @GetMapping
-    @RequestMapping("/byName")
-    public List<Student> getStudentByName(@RequestBody String name){
+    @RequestMapping(value = "/studentByName", method = RequestMethod.GET)
+    public List<Student> getStudentByName(@RequestParam("name") String name){
         return studentRepository.findByName(name);
     }
-    @RequestMapping("/byClassroomId")
-    @GetMapping
-    public List<Student> getStudentByClassroomId(@RequestBody Long id){
-        return studentRepository.findByClassroomId(id);
+    @RequestMapping(value = "/byClassroomId", method = RequestMethod.GET)
+    public List<Student> getStudentByClassroomId(@RequestParam("classroomId") Long classroomId){
+        return studentRepository.findByClassroomId(classroomId);
     }
-    @RequestMapping("/minFrequency")
-    @GetMapping
-    public List<Student> getStudentByMinFrequency(@RequestBody double min){
+    @RequestMapping(value = "/minFrequency", method = RequestMethod.GET)
+    public List<Student> getStudentByMinFrequency(@RequestParam("min") double min){
         return studentRepository.findByFrequencyGreaterThanEqual(min);
     }
+
     private void setStudentIntoClassroom(Student student){
         Optional<Classroom> c = classroomRepository.findById(student.getClassroomId());
         Classroom classroom;
         if (c.isPresent()){
             classroom = c.get();
-            //classroom.getStudents().add(student);
             classroom.update();
             classroomRepository.save(classroom);
-
         }
         else {
             System.out.println("Student registered in inexisting classroom.");
         }
 
     }
+
 }

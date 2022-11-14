@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("classroom")
+@RequestMapping("/classroom")
 public class ClassroomService {
     @Autowired
     private ClassroomRepository classroomRepository;
@@ -19,36 +19,34 @@ public class ClassroomService {
     public List<Classroom> getAll(){
         return classroomRepository.findAll();
     }
-    @GetMapping(value = "/{id}")
-    public Classroom getById(@PathVariable Long id){ return classroomRepository.findById(id).get();};
+    @GetMapping
+    @RequestMapping(value = "/byId")
+    public Classroom getById(@RequestParam() Long id){ return classroomRepository.findById(id).get();};
 
     @PostMapping
     public ResponseEntity insert(@RequestBody Classroom classroom){
         classroomRepository.save(classroom);
         return ResponseEntity.accepted().build();
     }
-    @GetMapping
-    @RequestMapping("/getByNbrStudents")
-    public List<Classroom> getByNbrStudents(@RequestBody Integer nbr){
+    @GetMapping(value = "/byNbrStudents")
+    public List<Classroom> getByNbrStudents(@RequestParam("nbr") Integer nbr){
         return classroomRepository.findByNbrStudents(nbr);
     }
 
     @GetMapping
-    @RequestMapping("/getClassroomByName")
-    public List<Classroom> getByStudents(@RequestBody String name){
+    @RequestMapping(value = "/byName")
+    public List<Classroom> getByStudents(@RequestParam("name") String name){
         return classroomRepository.findByStudents(name);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity delete(@PathVariable Long id){
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity delete(@RequestParam("id") Long id){
         classroomRepository.deleteById(id);
         return ResponseEntity.accepted().build();
     }
     @GetMapping
-    @RequestMapping("/mathNoteBetween")
-    public List<Classroom> getByMathNoteBetween(@RequestBody List<Double> minAndMax){
-        double min = Double.parseDouble(minAndMax.get(0).toString());
-        double max = Double.parseDouble(minAndMax.get(1).toString());
+    @RequestMapping(value = "/mathNoteBetween")
+    public List<Classroom> getByMathNoteBetween(@RequestParam("min") double min, @RequestParam("max") double max){
         return classroomRepository.findByMathMeanNoteBetween(min, max);
     }
 }
