@@ -20,7 +20,7 @@ public class Student {
     }*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long studentId;
     private String name;
     private Long classroomId;
     private double frequency;
@@ -33,7 +33,7 @@ public class Student {
     }
 
     public Student(Long id, String name,Long classroomId, double frequency, double mathematics, double portuguese, double german) {
-        this.id = id;
+        this.studentId = id;
         this.name = name;
         this.classroomId = classroomId;
         this.frequency = frequency;
@@ -52,11 +52,11 @@ public class Student {
     }
 
     public Long getId() {
-        return id;
+        return studentId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.studentId = id;
     }
 
     public String getName() {

@@ -6,18 +6,28 @@ import org.springframework.lang.UsesSunMisc;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Classroom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long classroom_id;
     @Nullable
     private Integer nbrStudents;
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "classroomId")
     private List<Student> students;
+
+    @Nullable
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "classrooms")
+    private Set<Professor> professors;
 
     private double mathMeanNote;
 
@@ -30,7 +40,7 @@ public class Classroom {
     }
 
     public Classroom(Long id) {
-        this.id = id;
+        this.classroom_id = id;
     }
 
     /*public Classroom(Long id, Integer nbrStudents, List<Student> students, double mathMeanNote, double portugueseMeanNote, double germanMeanNote) {
@@ -43,11 +53,11 @@ public class Classroom {
     }*/
 
     public Long getId() {
-        return id;
+        return classroom_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.classroom_id = id;
     }
 
     public Integer getNbrStudents() {
