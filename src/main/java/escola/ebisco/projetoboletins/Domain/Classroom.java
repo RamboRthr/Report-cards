@@ -15,10 +15,8 @@ public class Classroom {
     private Long id;
     @Nullable
     private Integer nbrStudents;
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "classroomId")
-    @Nullable
     private List<Student> students;
 
     private double mathMeanNote;

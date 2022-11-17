@@ -2,6 +2,7 @@ package escola.ebisco.projetoboletins.Domain;
 
 import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import net.bytebuddy.utility.nullability.MaybeNull;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Optional;
@@ -48,7 +49,6 @@ public class Student {
 
     public void setClassroomId(Long classroomId) {
         this.classroomId = classroomId;
-
     }
 
     public Long getId() {

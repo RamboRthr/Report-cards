@@ -1,6 +1,7 @@
 package escola.ebisco.projetoboletins.Services;
 
 import escola.ebisco.projetoboletins.Domain.Classroom;
+import escola.ebisco.projetoboletins.Domain.Student;
 import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +35,9 @@ public class ClassroomService {
     }
 
     @GetMapping
-    @RequestMapping(value = "/byName")
-    public List<Classroom> getByStudents(@RequestParam("name") String name){
-        return classroomRepository.findByStudents(name);
+    @RequestMapping(value = "/byStudent")
+    public Classroom getByStudents(@RequestBody Student student){
+        return classroomRepository.findByStudents(student);
     }
 
     @DeleteMapping(value = "/delete")
