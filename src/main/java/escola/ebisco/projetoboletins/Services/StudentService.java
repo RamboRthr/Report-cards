@@ -21,7 +21,7 @@ public class StudentService {
     private StudentRepository studentRepository;
     @Autowired
     private ClassroomRepository classroomRepository;
-    @GetMapping("/getAll")
+    @GetMapping()
     public List<Student> getAll(){
         return studentRepository.findAll();
     }
@@ -32,12 +32,13 @@ public class StudentService {
         setStudentIntoClassroom(student);
         return ResponseEntity.accepted().build();
     }
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deleteStudent(@RequestParam("id") Long id){
         if (studentRepository.findById(id).isPresent()) {
-            String name = studentRepository.findById(id).get().getName();
+            Student student = studentRepository.findById(id).get();
             studentRepository.deleteById(id);
-            return new ResponseEntity<String>("Student" + name + " deleted", HttpStatus.OK);
+            setStudentIntoClassroom(student);
+            return new ResponseEntity<String>("Student" + student.getName() + " deleted", HttpStatus.OK);
         }
         else{
             return ResponseEntity.notFound().build();

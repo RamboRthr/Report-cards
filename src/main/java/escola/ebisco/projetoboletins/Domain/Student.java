@@ -1,11 +1,6 @@
 package escola.ebisco.projetoboletins.Domain;
 
-import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
-import net.bytebuddy.utility.nullability.MaybeNull;
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
-import java.util.Optional;
 
 @Entity
 public class Student {
@@ -20,7 +15,7 @@ public class Student {
     }*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studentId;
+    private Long id;
     private String name;
     private Long classroomId;
     private double frequency;
@@ -33,7 +28,7 @@ public class Student {
     }
 
     public Student(Long id, String name,Long classroomId, double frequency, double mathematics, double portuguese, double german) {
-        this.studentId = id;
+        this.id = id;
         this.name = name;
         this.classroomId = classroomId;
         this.frequency = frequency;
@@ -52,11 +47,11 @@ public class Student {
     }
 
     public Long getId() {
-        return studentId;
+        return id;
     }
 
     public void setId(Long id) {
-        this.studentId = id;
+        this.id = id;
     }
 
     public String getName() {

@@ -6,8 +6,12 @@ import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import escola.ebisco.projetoboletins.Repo.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 @RestController
@@ -23,22 +27,22 @@ public class ProfessorService {
         return professorRepository.findAll();
     }
     @PostMapping
-    public ResponseEntity insertProfessor(@RequestBody Professor professor){
+    @Transactional
+    public ResponseEntity saveOrUpdate(@RequestBody Professor professor){
         professorRepository.save(professor);
         return ResponseEntity.ok().build();
     }
+
     @PutMapping
-    @RequestMapping(value = "/setClassroom")
-    public ResponseEntity setClassroom(@RequestParam("professorId") Long professorId, @RequestParam("classroomId") Long classroomId){
-        if (professorRepository.findById(professorId).isPresent() && classroomRepository.findById(classroomId).isPresent()){
-            Professor professor = professorRepository.findById(professorId).get();
-            professor.addClassroom(classroomRepository.findById(classroomId).get());
-            return ResponseEntity.ok().build();
-        }
-        else {
-            return ResponseEntity.notFound().build();
-        }
+    @Transactional
+    public ResponseEntity update(@RequestBody Professor professor){
+        professorRepository.update(professor.getId(), professor.getName(), professor.getSalary());
+        return ResponseEntity.accepted().build();
     }
-
-
+    @DeleteMapping
+    public ResponseEntity delete(@RequestParam("id") Long id){
+        professorRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 }
+

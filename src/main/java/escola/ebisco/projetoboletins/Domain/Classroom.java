@@ -1,8 +1,6 @@
 package escola.ebisco.projetoboletins.Domain;
 
-
 import org.springframework.lang.Nullable;
-import org.springframework.lang.UsesSunMisc;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +11,7 @@ public class Classroom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long classroom_id;
+    private Long id;
     @Nullable
     private Integer nbrStudents;
     @OneToMany(cascade = CascadeType.PERSIST)
@@ -21,12 +19,7 @@ public class Classroom {
     private List<Student> students;
 
     @Nullable
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "classrooms")
+    @ManyToMany(mappedBy = "classrooms")
     private Set<Professor> professors;
 
     private double mathMeanNote;
@@ -40,7 +33,7 @@ public class Classroom {
     }
 
     public Classroom(Long id) {
-        this.classroom_id = id;
+        this.id = id;
     }
 
     /*public Classroom(Long id, Integer nbrStudents, List<Student> students, double mathMeanNote, double portugueseMeanNote, double germanMeanNote) {
@@ -53,11 +46,11 @@ public class Classroom {
     }*/
 
     public Long getId() {
-        return classroom_id;
+        return id;
     }
 
     public void setId(Long id) {
-        this.classroom_id = id;
+        this.id = id;
     }
 
     public Integer getNbrStudents() {
@@ -118,5 +111,8 @@ public class Classroom {
     public void update(){
         this.setNbrStudents(this.students.size());
         this.setMeanNotes();
+    }
+    public void setProfessor(Professor professor){
+        this.professors.add(professor);
     }
 }

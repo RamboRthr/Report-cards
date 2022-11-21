@@ -9,7 +9,7 @@ import java.util.Set;
 public class Professor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long professor_id;
+    private Long id;
     private String name;
     private Double salary;
     @Nullable
@@ -22,24 +22,23 @@ public class Professor {
             inverseJoinColumns = {
                     @JoinColumn(name = "classroom_id")
             }
-
     )
     private Set<Classroom> classrooms;
 
     public Professor(Long professorId) {
-        this.professor_id = professorId;
+        this.id = professorId;
     }
 
     public Professor(){
 
     }
 
-    public Long getProfessorId() {
-        return professor_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setProfessorId(Long professorId) {
-        this.professor_id = professorId;
+    public void setId(Long professorId) {
+        this.id = professorId;
     }
 
     public String getName() {
@@ -63,6 +62,10 @@ public class Professor {
     }
 
     public void addClassroom(Classroom classroom) {
+        this.classrooms.add(classroom);
+    }
+
+    public void setClassroom(Classroom classroom){
         this.classrooms.add(classroom);
     }
 }
