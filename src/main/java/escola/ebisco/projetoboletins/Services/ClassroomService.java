@@ -45,9 +45,9 @@ public class ClassroomService {
     }
 
     @DeleteMapping()
-    public ResponseEntity delete(@RequestParam("id") Long id){
-        classroomRepository.deleteById(id);
-        return ResponseEntity.accepted().build();
+    public void delete(@RequestParam("id") Long id){
+        var classroom = classroomRepository.findById(id);
+        classroom.ifPresent(value -> classroomRepository.delete(value));
     }
     @GetMapping
     @RequestMapping(value = "/mathNoteBetween")

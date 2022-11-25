@@ -65,6 +65,10 @@ public class Professor {
         this.classrooms.add(classroom);
     }
 
+    public void setClassrooms(@Nullable Set<Classroom> classrooms) {
+        this.classrooms = classrooms;
+    }
+
     public void setClassroom(Classroom classroom){
         this.classrooms.add(classroom);
     }

@@ -4,6 +4,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -57,7 +58,7 @@ public class Classroom {
         return nbrStudents;
     }
 
-    public void setNbrStudents(@Nullable Integer nbrStudents) {
+    public void setNbrStudents(Integer nbrStudents) {
         this.nbrStudents = nbrStudents;
     }
 
@@ -102,10 +103,15 @@ public class Classroom {
             sumPortuguese += std.getPortuguese();
             sumGerman += std.getGerman();
         }
+        if(nbrStudents != null) {
+            this.mathMeanNote = sumMath / nbrStudents;
+            this.portugueseMeanNote = sumPortuguese / nbrStudents;
+            this.germanMeanNote = sumGerman / nbrStudents;
+        }
+    }
 
-        this.mathMeanNote = sumMath / nbrStudents;
-        this.portugueseMeanNote = sumPortuguese / nbrStudents;
-        this.germanMeanNote = sumGerman / nbrStudents;
+    public void setProfessors(@Nullable Set<Professor> professors) {
+        this.professors = professors;
     }
 
     public void update(){
@@ -115,4 +121,9 @@ public class Classroom {
     public void setProfessor(Professor professor){
         this.professors.add(professor);
     }
+
+    public void addStudent(Student student){
+        this.students.add(student);
+    }
+
 }
