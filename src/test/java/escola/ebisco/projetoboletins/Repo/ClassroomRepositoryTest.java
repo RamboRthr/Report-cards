@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -54,5 +56,16 @@ public class ClassroomRepositoryTest {
         var updatedClassroom = classroomRepository.save(savedClassroom);
 
         assertNotEquals(classroom.getNbrStudents(), updatedClassroom.getNbrStudents());
+    }
+
+    @Test
+    void delete(){
+
+        var classroom = new Classroom();
+        classroomRepository.save(classroom);
+        classroomRepository.deleteById(classroom.getId());
+        assertFalse(classroomRepository.findById(classroom.getId()).isPresent() );
+
+
     }
 }
