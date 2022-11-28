@@ -45,7 +45,7 @@ public class ProfessorServiceTest {
 
         assertEquals(response.getStatusCode(), res.getStatusCode());
 
-        verify(professorRepository, times(1));
+        verify(professorRepository, times(1)).deleteById(Mockito.anyLong());
     }
 
 
