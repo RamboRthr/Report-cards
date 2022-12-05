@@ -1,4 +1,4 @@
-package escola.ebisco.projetoboletins.Services;
+package escola.ebisco.projetoboletins.security.Services;
 
 import escola.ebisco.projetoboletins.Domain.Classroom;
 import escola.ebisco.projetoboletins.Domain.Professor;
@@ -6,6 +6,7 @@ import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import escola.ebisco.projetoboletins.Repo.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/professor")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class ProfessorService {
 
     @Autowired

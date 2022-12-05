@@ -3,6 +3,7 @@ package escola.ebisco.projetoboletins.Services;
 import escola.ebisco.projetoboletins.Domain.Student;
 import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import escola.ebisco.projetoboletins.Repo.StudentRepository;
+import escola.ebisco.projetoboletins.security.Services.StudentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -88,6 +89,7 @@ public class StudentServiceTest {
         assertEquals(resNotFound.getStatusCode(), responseNotFound.getStatusCode());
         verify(studentRepository, times(1)).findById(Mockito.anyLong());
     }
+
 
 
 }

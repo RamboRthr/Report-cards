@@ -5,6 +5,7 @@ import escola.ebisco.projetoboletins.Domain.Professor;
 import escola.ebisco.projetoboletins.Domain.Student;
 import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import escola.ebisco.projetoboletins.Repo.ProfessorRepository;
+import escola.ebisco.projetoboletins.security.Services.ClassroomService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

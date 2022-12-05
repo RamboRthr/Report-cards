@@ -3,6 +3,7 @@ package escola.ebisco.projetoboletins.Domain;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class Classroom {
     private double germanMeanNote;
 
     public Classroom(){
-
+        this.students = new ArrayList<>();
     }
 
     public Classroom(Long id) {
@@ -115,6 +116,7 @@ public class Classroom {
     }
 
     public void update(){
+
         this.setNbrStudents(this.students.size());
         this.setMeanNotes();
     }
