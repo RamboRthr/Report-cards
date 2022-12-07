@@ -1,8 +1,5 @@
 package escola.ebisco.projetoboletins.Domain;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -26,7 +23,6 @@ public class User implements Serializable {
     @Column(name = "PASSWORD", nullable = false)
     @Size(max = 120)
     private String password;
-
 
     @Column(name = "EMAIL", nullable = false, unique = true)
     @Size(max = 50)
