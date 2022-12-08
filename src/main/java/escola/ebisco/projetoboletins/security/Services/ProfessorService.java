@@ -1,6 +1,5 @@
 package escola.ebisco.projetoboletins.security.Services;
 
-import escola.ebisco.projetoboletins.Domain.Classroom;
 import escola.ebisco.projetoboletins.Domain.Professor;
 import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import escola.ebisco.projetoboletins.Repo.ProfessorRepository;
@@ -10,9 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.List;
 
 @RestController
@@ -24,24 +20,24 @@ public class ProfessorService {
     ProfessorRepository professorRepository;
     @Autowired
     ClassroomRepository classroomRepository;
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public List<Professor> getAll(){
         return professorRepository.findAll();
     }
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST)
     @Transactional
     public ResponseEntity saveOrUpdate(@RequestBody Professor professor){
         professorRepository.save(professor);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
+    @RequestMapping(method = RequestMethod.PUT)
     @Transactional
     public ResponseEntity update(@RequestBody Professor professor){
         professorRepository.update(professor.getId(), professor.getName(), professor.getSalary());
         return ResponseEntity.accepted().build();
     }
-    @DeleteMapping
+    @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity delete(@RequestParam("id") Long id){
         professorRepository.deleteById(id);
         return ResponseEntity.ok().build();

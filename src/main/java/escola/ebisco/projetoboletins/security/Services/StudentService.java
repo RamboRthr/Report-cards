@@ -6,11 +6,8 @@ import escola.ebisco.projetoboletins.Domain.Student;
 import escola.ebisco.projetoboletins.Repo.ClassroomRepository;
 import escola.ebisco.projetoboletins.Repo.StudentRepository;
 import escola.ebisco.projetoboletins.Repo.UserRepository;
-
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,13 +28,13 @@ public class StudentService {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping()
+    @RequestMapping(method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Student> getAll(){
         return studentRepository.findAll();
     }
 
-    @PostMapping(value = "/post")
+    @RequestMapping(method = RequestMethod.POST)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity insertStudent(@RequestBody Student student){
         studentRepository.save(student);
@@ -57,8 +54,7 @@ public class StudentService {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping
-    @RequestMapping(value = "/byId")
+    @RequestMapping(value = "/byId", method = RequestMethod.GET)
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_STUDENT')")
     public ResponseEntity<Student> getStudentById(@RequestParam("id") Long id){
 

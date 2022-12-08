@@ -61,7 +61,7 @@ public class AuthControllerTest {
 
         assertEquals(responseBadRequest.getStatusCode(), res.getStatusCode());
         assertTrue(res.hasBody());
-        verify(userRepository, times(1));
+        verify(userRepository, times(1)).existsByUsername(any());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class AuthControllerTest {
 
         assertEquals(responseBadRequest.getStatusCode(), res.getStatusCode());
         assertTrue(res.hasBody());
-        verify(userRepository, times(1));
+        verify(userRepository, times(1)).existsByEmail(any());
     }
 
     @Test

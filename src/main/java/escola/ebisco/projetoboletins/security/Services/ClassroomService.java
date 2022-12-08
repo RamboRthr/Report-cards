@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -26,38 +25,39 @@ public class ClassroomService {
     public List<Classroom> getAll(){
         return classroomRepository.findAll();
     }
-    @GetMapping
-    @RequestMapping(value = "/byId")
+
+    @RequestMapping(value = "/byId", method = RequestMethod.GET)
     public Classroom getById(@RequestParam() Long id){ return classroomRepository.findById(id).get();};
 
-    @PostMapping
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity insert(@RequestBody Classroom classroom){
         classroom.update();
         classroomRepository.save(classroom);
         return ResponseEntity.accepted().build();
     }
-    @GetMapping(value = "/byNbrStudents")
+
+    @RequestMapping(value = "/byNbrStudents", method = RequestMethod.GET)
     public List<Classroom> getByNbrStudents(@RequestParam("nbr") Integer nbr){
         return classroomRepository.findByNbrStudents(nbr);
     }
 
-    @GetMapping
-    @RequestMapping(value = "/byStudent")
+
+    @RequestMapping(value = "/byStudent", method = RequestMethod.GET)
     public Classroom getByStudents(@RequestBody Student student){
         return classroomRepository.findByStudents(student);
     }
 
-    @DeleteMapping()
+    @RequestMapping(method = RequestMethod.DELETE)
     public void delete(@RequestParam("id") Long id){
         var classroom = classroomRepository.findById(id);
         classroom.ifPresent(value -> classroomRepository.delete(value));
     }
-    @GetMapping
-    @RequestMapping(value = "/mathNoteBetween")
+    @RequestMapping(value = "/mathNoteBetween", method = RequestMethod.GET)
     public List<Classroom> getByMathNoteBetween(@RequestParam("min") double min, @RequestParam("max") double max){
         return classroomRepository.findByMathMeanNoteBetween(min, max);
     }
-    @PutMapping("/setProfessor")
+
+    @RequestMapping(value = "/setProfessor", method = RequestMethod.PUT)
     public ResponseEntity addProfessorToClassroom(
             @RequestParam("classroomId") Long classroomId,
             @RequestParam("professorId") Long professorId

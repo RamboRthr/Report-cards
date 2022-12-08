@@ -45,7 +45,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/signin")
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -66,7 +66,7 @@ public class AuthController {
                 roles));
     }
 
-    @PostMapping("/signup")
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
